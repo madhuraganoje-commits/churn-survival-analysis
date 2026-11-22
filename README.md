@@ -1,6 +1,6 @@
 # Who Leaves, and When? Predicting Customer Churn with Survival Analysis
 
-**Madhura Ganoje** | MSc Business Analytics, Queen Mary University of London | 2026
+**Madhura Ganoje** | MSc Business Analytics, Queen Mary University of London | 2026 | Group project, individual report
 
 Python (pandas, lifelines, scikit-survival, scikit-learn, matplotlib, seaborn) | 7,043 customers | 3 models
 
@@ -46,7 +46,7 @@ No duplicates or other missing values were found.
 
 Before modelling, I looked at churn rates across each feature.
 
-![Churn rate by key features](images/01_churn_by_feature.png)
+![Churn rate by key features](01_churn_by_feature.png)
 
 What stood out:
 
@@ -67,13 +67,13 @@ That last point is exactly what a yes/no classifier would miss, and it confirmed
 
 ### Step 1: Kaplan-Meier, to see the pattern
 
-![Retention by contract type](images/02_km_by_contract.png)
+![Retention by contract type](02_km_by_contract.png)
 
 The gap between month-to-month and fixed-term customers is the largest in the data (log-rank test p < 0.0001). But contract, internet type and payment method are correlated with each other, so this view cannot say which one actually drives churn. That is what the next model is for.
 
 ### Step 2: Cox model, to separate the drivers
 
-![Cox hazard ratios](images/03_cox_hazard_ratios.png)
+![Cox hazard ratios](03_cox_hazard_ratios.png)
 
 A hazard ratio below 1 means lower churn risk; above 1 means higher.
 
@@ -98,13 +98,13 @@ A hazard ratio below 1 means lower churn risk; above 1 means higher.
 
 **Customer profiles.** I asked the model to predict retention for three typical customers:
 
-![Predicted retention for three customer profiles](images/04_customer_profiles.png)
+![Predicted retention for three customer profiles](04_customer_profiles.png)
 
 A month-to-month, fiber optic, electronic check customer has only a **30% chance of still being a customer after 12 months**. A two-year, DSL, auto-pay customer: **98%**.
 
 **Risk tiers.** I scored all 7,043 customers and split them into four equal groups. To check the scores mean something, I plotted the groups' *actual* retention:
 
-![Actual retention by model risk tier](images/05_risk_segments.png)
+![Actual retention by model risk tier](05_risk_segments.png)
 
 | Risk tier | Customers | Actual churn rate | Avg tenure (months) |
 |---|---|---|---|
@@ -133,22 +133,14 @@ Matching actions to tiers: low risk needs no action; medium gets digital nudges;
 - **Time-varying effects.** A Cox model with time-varying effects, or a neural network survival model such as DeepSurv, could handle the broken assumption more directly.
 - **Productising it:** wrap the scoring in a simple app where a retention manager picks a customer and sees their predicted retention curve and tier.
 
-## 9. Repository structure
+## 9. Repository contents
 
-```
-churn-survival-analysis/
-  README.md                  this case study
-  images/                    figures used above
-  notebooks/
-    01_eda.ipynb             exploration and cleaning
-    02_kaplan_meier.ipynb    retention curves and log-rank tests
-    03_cox_model.ipynb       hazard ratios and assumption checks
-    04_random_survival_forest.ipynb   tuning, evaluation, profiles, risk tiers
-  data/                      instructions to download the IBM Telco dataset
-```
+- `README.md`: this case study
+- `01` to `05` `.png` files: the charts used above
+- Code notebooks (EDA, Kaplan-Meier, Cox model, Random Survival Forest) will be added. The data is the public IBM Telco Customer Churn dataset.
 
 ## Tools
 
 Python: pandas, NumPy, lifelines, scikit-survival, scikit-learn (train/test split, GridSearchCV, permutation importance), matplotlib, seaborn. Jupyter.
 
-*Originally completed as an individual project for Masterclass in Business Analytics (Machine Learning), Queen Mary University of London.*
+*Group project for Masterclass in Business Analytics (Machine Learning), Queen Mary University of London, with an individual written report by each team member. This case study is based on my individual report.*
